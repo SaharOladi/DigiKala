@@ -22,6 +22,7 @@ public class NetworkGetter {
 
     private List<ProductsItem> mProducts;
     private RequestService mRequestService;
+    private NetworkState mNetworkState;
 
     public static final Map<String, String> BASE = new HashMap<String, String>() {{
         put("consumer_key", CONSUMER_KEY);
@@ -54,6 +55,7 @@ public class NetworkGetter {
             @Override
             public void onFailure(Call<List<ProductsItem>> call, Throwable t) {
                 Log.e(TAG, t.getMessage(), t);
+                mNetworkState.onFailureCalled();
 
             }
         });
@@ -77,6 +79,7 @@ public class NetworkGetter {
             @Override
             public void onFailure(Call<List<ProductsItem>> call, Throwable t) {
                 Log.e(TAG, t.getMessage(), t);
+                mNetworkState.onFailureCalled();
             }
         });
     }
@@ -101,6 +104,7 @@ public class NetworkGetter {
             @Override
             public void onFailure(Call<List<ProductsItem>> call, Throwable t) {
                 Log.e(TAG, t.getMessage(), t);
+                mNetworkState.onFailureCalled();
             }
         });
     }
@@ -123,6 +127,8 @@ public class NetworkGetter {
             @Override
             public void onFailure(Call<List<ProductsItem>> call, Throwable t) {
                 Log.e(TAG, t.getMessage(), t);
+                mNetworkState.onFailureCalled();
+
             }
         });
     }
@@ -144,6 +150,7 @@ public class NetworkGetter {
             @Override
             public void onFailure(Call<List<CategoriesItem>> call, Throwable t) {
                 Log.e(TAG, t.getMessage(), t);
+                mNetworkState.onFailureCalled();
 
             }
         });
@@ -167,6 +174,8 @@ public class NetworkGetter {
             @Override
             public void onFailure(Call<List<ProductsItem>> call, Throwable t) {
                 Log.e(TAG, t.getMessage(), t);
+                mNetworkState.onFailureCalled();
+
             }
         });
     }
@@ -188,6 +197,8 @@ public class NetworkGetter {
             @Override
             public void onFailure(Call<ProductsItem> call, Throwable t) {
                 Log.e(TAG, t.getMessage(), t);
+                mNetworkState.onFailureCalled();
+
             }
         });
     }
@@ -210,6 +221,8 @@ public class NetworkGetter {
             @Override
             public void onFailure(Call<List<ProductsItem>> call, Throwable t) {
                 Log.e(TAG, t.getMessage(), t);
+                mNetworkState.onFailureCalled();
+
             }
         });
     }
@@ -224,6 +237,10 @@ public class NetworkGetter {
 
     public interface SingleCallbacks {
         void onItemResponse(ProductsItem item);
+    }
+
+    public interface NetworkState {
+        void onFailureCalled();
     }
 
 }
