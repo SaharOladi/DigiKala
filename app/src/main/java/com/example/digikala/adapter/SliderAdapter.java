@@ -1,4 +1,4 @@
-package com.example.digikala;
+package com.example.digikala.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.digikala.R;
 import com.example.digikala.model.ImagesItem;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 

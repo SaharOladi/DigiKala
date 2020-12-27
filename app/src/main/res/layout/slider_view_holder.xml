@@ -7,22 +7,19 @@
     app:cardCornerRadius="10dp">
 
     <com.smarteist.autoimageslider.SliderView
-        android:id="@+id/imageSlider"
+        android:id="@+id/fragment_home_slider"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:cardCornerRadius="10dp"
+        android:layout_height="160dp"
         app:sliderAnimationDuration="600"
-        app:sliderAutoCycleDirection="back_and_forth"
+        app:sliderAutoCycleDirection="right"
         app:sliderAutoCycleEnabled="true"
         app:sliderIndicatorAnimationDuration="600"
         app:sliderIndicatorGravity="center_horizontal|bottom"
-        app:sliderIndicatorMargin="15dp"
+        app:sliderIndicatorMargin="10dp"
         app:sliderIndicatorOrientation="horizontal"
-        app:sliderIndicatorPadding="3dp"
-        app:sliderIndicatorRadius="0.5dp"
-        app:sliderIndicatorSelectedColor="#5A5A5A"
+        app:sliderIndicatorSelectedColor="@color/red_digikala"
         app:sliderIndicatorUnselectedColor="@color/white"
-        app:sliderScrollTimeInSec="1"
+        app:sliderScrollTimeInSec="3"
         app:sliderStartAutoCycle="true" />
 
 </androidx.cardview.widget.CardView>

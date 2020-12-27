@@ -10,6 +10,8 @@
 
     <color name="red_digikala">#B10404</color>
     <color name="green_digikala">#03AC49</color>
+    <color name="red_smooth_digikala">#F82929</color>
+    <color name="blue_digikala">#03AFCD</color>
 
 
 </resources>

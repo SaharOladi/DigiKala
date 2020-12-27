@@ -1,92 +1,242 @@
 package com.example.digikala.repository;
 
-import android.content.Context;
+import android.util.Log;
+
 
 import com.example.digikala.model.CategoriesItem;
 import com.example.digikala.model.ProductsItem;
+import com.example.digikala.network.RequestService;
+import com.example.digikala.network.RetrofitInstance;
 
-import java.util.ArrayList;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.example.digikala.network.NetworkParam.CONSUMER_KEY;
+import static com.example.digikala.network.NetworkParam.CONSUMER_SECRET;
 
 public class Repository {
 
-    private Context mContext;
-    private static Repository sInstance;
+    private final String TAG = "Repository";
 
-    public Repository(Context context) {
-        mContext = context;
+    private List<ProductsItem> mProducts;
+    private RequestService mRequestService;
+
+    public static final Map<String, String> BASE = new HashMap<String, String>() {{
+        put("consumer_key", CONSUMER_KEY);
+        put("consumer_secret", CONSUMER_SECRET);
+
+    }};
+
+    public List<ProductsItem> getProducts() {
+        return mProducts;
     }
 
-    public static Repository getInstance(Context context) {
-        if (sInstance == null)
-            sInstance = new Repository(context);
-        return sInstance;
+    public void setProducts(List<ProductsItem> products) {
+        mProducts = products;
+    }
+
+    public Repository() {
+        mRequestService = RetrofitInstance.getInstance().create(RequestService.class);
+    }
+
+    public void fetchAllProductItemsAsync(Callbacks callBacks) {
+
+        mRequestService.getProducts(BASE).enqueue(new Callback<List<ProductsItem>>() {
+            @Override
+            public void onResponse(Call<List<ProductsItem>> call, Response<List<ProductsItem>> response) {
+                List<ProductsItem> items = response.body();
+                //update adapter of recyclerview
+                callBacks.onItemResponse(items);
+            }
+
+
+            @Override
+            public void onFailure(Call<List<ProductsItem>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+
+            }
+        });
+    }
+
+    public void fetchRecentProducts(int page, Callbacks callBacks) {
+        HashMap<String, String> insideMap = new HashMap<>();
+
+        insideMap.putAll(BASE);
+        insideMap.put("page", String.valueOf(page));
+        insideMap.put("orderby", "date");
+
+        mRequestService.getProducts(insideMap).enqueue(new Callback<List<ProductsItem>>() {
+            @Override
+            public void onResponse(Call<List<ProductsItem>> call, Response<List<ProductsItem>> response) {
+
+                List<ProductsItem> recentItems = response.body();
+                //update adapter of recyclerview
+                callBacks.onItemResponse(recentItems);
+            }
+
+            @Override
+            public void onFailure(Call<List<ProductsItem>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
     }
 
 
-    private List<ProductsItem> mAllProductsItems = new ArrayList<>();
-    private List<ProductsItem> mMostVisitedProductsItems = new ArrayList<>();
-    private List<ProductsItem> mRecentProductsItems = new ArrayList<>();
-    private List<ProductsItem> mRatedProductsItems = new ArrayList<>();
-    private List<ProductsItem> mCategoryProductsItems = new ArrayList<>();
-    private List<CategoriesItem> mCategoriesItems = new ArrayList<>();
+    public void fetchMostVisitedProducts(int page, Callbacks callBacks) {
+        HashMap<String, String> insideMap = new HashMap<>();
 
-    private ProductsItem mSingleProductsItem;
+        insideMap.putAll(BASE);
+        insideMap.put("page", String.valueOf(page));
+        insideMap.put("orderby", "rating");
 
+        mRequestService.getProducts(insideMap).enqueue(new Callback<List<ProductsItem>>() {
+            @Override
+            public void onResponse(Call<List<ProductsItem>> call, Response<List<ProductsItem>> response) {
 
-    public List<ProductsItem> getAllProductsItems() {
-        return mAllProductsItems;
+                List<ProductsItem> mostVisitedItems = response.body();
+                //update adapter of recyclerview
+                callBacks.onItemResponse(mostVisitedItems);
+            }
+
+            @Override
+            public void onFailure(Call<List<ProductsItem>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
     }
 
-    public void setAllProductsItems(List<ProductsItem> allProductsItems) {
-        mAllProductsItems = allProductsItems;
+    public void fetchRatedProducts(int page, Callbacks callBacks) {
+        HashMap<String, String> insideMap = new HashMap<>();
+
+        insideMap.putAll(BASE);
+        insideMap.put("page", String.valueOf(page));
+        insideMap.put("orderby", "popularity");
+
+        mRequestService.getProducts(insideMap).enqueue(new Callback<List<ProductsItem>>() {
+            @Override
+            public void onResponse(Call<List<ProductsItem>> call, Response<List<ProductsItem>> response) {
+
+                List<ProductsItem> ratedItems = response.body();
+                //update adapter of recyclerview
+                callBacks.onItemResponse(ratedItems);
+            }
+
+            @Override
+            public void onFailure(Call<List<ProductsItem>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
     }
 
-    public List<ProductsItem> getMostVisitedProductsItems() {
-        return mMostVisitedProductsItems;
+    public void fetchCategory(int page, CategoryCallbacks callBacks) {
+        HashMap<String, String> insideMap = new HashMap<>();
+
+        insideMap.putAll(BASE);
+        insideMap.put("page", String.valueOf(page));
+        insideMap.put("per_page", String.valueOf(10));
+
+        mRequestService.getCategories(insideMap).enqueue(new Callback<List<CategoriesItem>>() {
+            @Override
+            public void onResponse(Call<List<CategoriesItem>> call, Response<List<CategoriesItem>> response) {
+                List<CategoriesItem> categoriesItems = response.body();
+                //update adapter of recyclerview
+                callBacks.onItemResponse(categoriesItems);
+            }
+
+            @Override
+            public void onFailure(Call<List<CategoriesItem>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+
+            }
+        });
     }
 
-    public void setMostVisitedProductsItems(List<ProductsItem> mostVisitedProductsItems) {
-        mMostVisitedProductsItems = mostVisitedProductsItems;
+    public void fetchCategoryProduct(int page, int id, Callbacks callBacks) {
+        HashMap<String, String> localMap = new HashMap<>();
+
+        localMap.putAll(BASE);
+        localMap.put("page", String.valueOf(page));
+        localMap.put("category", String.valueOf(id));
+
+        mRequestService.getProducts(localMap).enqueue(new Callback<List<ProductsItem>>() {
+            @Override
+            public void onResponse(Call<List<ProductsItem>> call, Response<List<ProductsItem>> response) {
+
+                List<ProductsItem> categoryItems = response.body();
+                //update adapter of recyclerview
+                callBacks.onItemResponse(categoryItems);
+            }
+
+            @Override
+            public void onFailure(Call<List<ProductsItem>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
     }
 
-    public List<ProductsItem> getRecentProductsItems() {
-        return mRecentProductsItems;
+
+    public void fetchSingleProduct(int id, SingleCallbacks callBacks) {
+        HashMap<String, String> insideMap = new HashMap<>();
+
+        insideMap.putAll(BASE);
+
+        mRequestService.getSingleProduct(id, insideMap).enqueue(new Callback<ProductsItem>() {
+            @Override
+            public void onResponse(Call<ProductsItem> call, Response<ProductsItem> response) {
+
+                ProductsItem productsItem = response.body();
+                //update adapter of recyclerview
+                callBacks.onItemResponse(productsItem);
+            }
+
+            @Override
+            public void onFailure(Call<ProductsItem> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
     }
 
-    public void setRecentProductsItems(List<ProductsItem> recentProductsItems) {
-        mRecentProductsItems = recentProductsItems;
+
+    public void fetchSearchProducts(String query, Callbacks callBacks) {
+
+        HashMap<String, String> insideMap = new HashMap<>();
+
+        insideMap.putAll(BASE);
+        insideMap.put("search", query);
+
+        mRequestService.getProducts(insideMap).enqueue(new Callback<List<ProductsItem>>() {
+            @Override
+            public void onResponse(Call<List<ProductsItem>> call, Response<List<ProductsItem>> response) {
+                List<ProductsItem> searchItems = response.body();
+                //update adapter of recyclerview
+                callBacks.onItemResponse(searchItems);
+            }
+
+            @Override
+            public void onFailure(Call<List<ProductsItem>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
     }
 
-    public List<ProductsItem> getRatedProductsItems() {
-        return mRatedProductsItems;
+
+    public interface Callbacks {
+        void onItemResponse(List<ProductsItem> items);
     }
 
-    public void setRatedProductsItems(List<ProductsItem> ratedProductsItems) {
-        mRatedProductsItems = ratedProductsItems;
+    public interface CategoryCallbacks {
+        void onItemResponse(List<CategoriesItem> items);
     }
 
-    public List<ProductsItem> getCategoryProductsItems() {
-        return mCategoryProductsItems;
+    public interface SingleCallbacks {
+        void onItemResponse(ProductsItem item);
     }
 
-    public void setCategoryProductsItems(List<ProductsItem> categoryProductsItems) {
-        mCategoryProductsItems = categoryProductsItems;
-    }
 
-    public List<CategoriesItem> getCategoriesItems() {
-        return mCategoriesItems;
-    }
-
-    public void setCategoriesItems(List<CategoriesItem> categoriesItems) {
-        mCategoriesItems = categoriesItems;
-    }
-
-    public ProductsItem getSingleProductsItem() {
-        return mSingleProductsItem;
-    }
-
-    public void setSingleProductsItem(ProductsItem singleProductsItem) {
-        mSingleProductsItem = singleProductsItem;
-    }
 }

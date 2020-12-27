@@ -1,6 +1,7 @@
 package com.example.digikala.activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -15,13 +16,16 @@ import com.example.digikala.fragment.ShoppingFragment;
 import com.example.digikala.fragment.UserFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
     private BottomNavigationView mBottomNavigationView;
 
+
     public static Intent newIntent(Context context) {
-        return new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, MainActivity.class);
+        return intent;
     }
 
     @Override
