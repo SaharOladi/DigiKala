@@ -8,11 +8,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.digikala.CategoryFragment;
-import com.example.digikala.HomeFragment;
+import com.example.digikala.fragment.CategoryFragment;
+import com.example.digikala.fragment.HomeFragment;
 import com.example.digikala.R;
-import com.example.digikala.ShoppingFragment;
-import com.example.digikala.UserFragment;
+import com.example.digikala.fragment.ShoppingFragment;
+import com.example.digikala.fragment.UserFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.example.digikala;
+package com.example.digikala.fragment;
 
 import android.os.Bundle;
 
@@ -8,15 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class CategoryFragment extends Fragment {
+import com.example.digikala.R;
 
-    public CategoryFragment() {
+public class ShoppingFragment extends Fragment {
+
+
+    public ShoppingFragment() {
         // Required empty public constructor
     }
 
-    public static CategoryFragment newInstance() {
-        CategoryFragment fragment = new CategoryFragment();
+    public static ShoppingFragment newInstance() {
+        ShoppingFragment fragment = new ShoppingFragment();
         Bundle args = new Bundle();
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -30,6 +34,6 @@ public class CategoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_category, container, false);
+        return inflater.inflate(R.layout.fragment_shopping, container, false);
     }
 }

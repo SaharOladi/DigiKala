@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="red_digikala">#B10404</color>
+    <color name="red_smooth">#FF7474</color>
+
 </resources>
