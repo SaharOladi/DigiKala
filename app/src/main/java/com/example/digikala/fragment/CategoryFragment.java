@@ -16,22 +16,26 @@ import android.widget.TextView;
 
 import com.example.digikala.R;
 import com.example.digikala.adapter.CategoryAdapter;
+import com.example.digikala.adapter.CategoryListAdapter;
+import com.example.digikala.adapter.ProductAdapter;
 import com.example.digikala.model.CategoriesItem;
+import com.example.digikala.model.ProductsItem;
 import com.example.digikala.repository.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryFragment extends Fragment implements CategoryAdapter.OnCategoryClickListener {
 
     public static final String TAG = "CategoryFragment";
 
-    private RecyclerView mRecyclerViewCategory;
-    private CategoryAdapter mProductAdapterCategory;
-    private ProgressBar mProgressBar;
-    private TextView mTextProgressBar;
+    private RecyclerView mRecyclerViewCategoryOne, mRecyclerViewCategoryTwo, mRecyclerViewCategoryThree,
+    mRecyclerViewCategoryFour, mRecyclerViewCategoryFive, mRecyclerViewCategorySix, mRecyclerViewCategorySeven,
+    mRecyclerViewCategoryEight, mRecyclerViewCategoryNine, mRecyclerViewCategoryTen;
 
+    private ProductAdapter mProductAdapterCategory;
     private Repository mRepository;
-
+    private List<Integer> mCategoryIds = new ArrayList<>();
 
     public CategoryFragment() {
         // Required empty public constructor
@@ -52,10 +56,7 @@ public class CategoryFragment extends Fragment implements CategoryAdapter.OnCate
         mRepository.fetchCategory(1, new Repository.CategoryCallbacks() {
             @Override
             public void onItemResponse(List<CategoriesItem> items) {
-                initCategoryRecyclerAdapter(items);
-                mProgressBar.setVisibility(View.GONE);
-                mTextProgressBar.setVisibility(View.GONE);
-
+                initCategoryRecyclerAdapter(initCategoryIds(items));
             }
         });
 
@@ -74,35 +75,54 @@ public class CategoryFragment extends Fragment implements CategoryAdapter.OnCate
     }
 
     private void findViews(View view) {
-        mRecyclerViewCategory = view.findViewById(R.id.category_recycler_one);
-        mProgressBar = view.findViewById(R.id.progress_bar);
-        mTextProgressBar = view.findViewById(R.id.textView_progressbar);
+        mRecyclerViewCategoryOne= view.findViewById(R.id.category_recycler_one);
+        mRecyclerViewCategoryTwo= view.findViewById(R.id.category_recycler_two);
+        mRecyclerViewCategoryThree= view.findViewById(R.id.category_recycler_three);
+
     }
 
-    private void initCategoryRecyclerAdapter(List<CategoriesItem> categoriesItems) {
-
-        mRecyclerViewCategory.setLayoutManager(new LinearLayoutManager(getContext(),
+    private void initCategoryRecyclerAdapter(List<Integer> ids) {
+        mRecyclerViewCategoryOne.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
-        updateCategoryRecyclerAdapter(categoriesItems);
+        mRecyclerViewCategoryTwo.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false));
+        mRecyclerViewCategoryThree.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false));
+
+        updateCategoryRecyclerAdapter(ids);
     }
 
-    private void updateCategoryRecyclerAdapter(List<CategoriesItem> categoriesItems) {
-
-        if (mProductAdapterCategory == null) {
-            mProductAdapterCategory = new CategoryAdapter(getContext(), categoriesItems);
-            mRecyclerViewCategory.setAdapter(mProductAdapterCategory);
-        } else {
-            mProductAdapterCategory.setCategoriesItem(categoriesItems);
-            mProductAdapterCategory.notifyDataSetChanged();
+    private void updateCategoryRecyclerAdapter(List<Integer> ids) {
+        for (int i = 0; i < ids.size(); i++) {
+            mRepository.fetchCategoryProduct(1, ids.get(i), new Repository.Callbacks() {
+                @Override
+                public void onItemResponse(List<ProductsItem> items) {
+                    if (mProductAdapterCategory == null) {
+                        mProductAdapterCategory = new ProductAdapter(getContext(), items);
+                        mRecyclerViewCategoryOne.setAdapter(mProductAdapterCategory);
+                    } else {
+                        mProductAdapterCategory.setProductsItem(items);
+                        mProductAdapterCategory.notifyDataSetChanged();
+                    }
+                }
+            });
         }
+
+
+    }
+
+    private List<Integer> initCategoryIds(List<CategoriesItem> items){
+        List<Integer> ids = new ArrayList<>();
+        for (int i = 0; i <items.size() ; i++) {
+            if(!ids.contains(items.get(i).getId())){
+                ids.add(items.get(i).getId());
+            }
+        }
+        return ids;
     }
 
     @Override
     public void onCategoryClick(int id) {
-//        getActivity().getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.fragment_container, CategoryListFragment.newInstance(id))
-//                .commit();
-//        Log.d(TAG, "onCategoryClick: "+id);
     }
 
 
