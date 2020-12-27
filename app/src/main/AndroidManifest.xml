@@ -19,7 +19,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.SingleFragmentActivity" />
-        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name=".activity.MainActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden">
+        </activity>
     </application>
 
 </manifest>
