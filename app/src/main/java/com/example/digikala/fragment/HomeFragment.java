@@ -32,16 +32,13 @@ public class HomeFragment extends Fragment {
     private SliderView mSliderView;
     private SliderAdapter mSliderAdapter;
 
-    private RecyclerView mRecyclerViewRecentProduct;
-    private RecyclerView mRecyclerViewMostVisitedProduct;
-    private RecyclerView mRecyclerViewRatedProduct;
-    private RecyclerView mRecyclerCategoryProduct;
+    private RecyclerView mRecyclerViewRecentProduct, mRecyclerViewMostVisitedProduct,
+            mRecyclerViewRatedProduct, mRecyclerCategoryProduct, mRecyclerViewAmazing;
 
 
-    private ProductAdapter mRecentProductAdapter;
-    private ProductAdapter mMostVisitedProductAdapter;
-    private ProductAdapter mRatedProductAdapter;
-    private ProductAdapter mSliderProductAdapter;
+    private ProductAdapter mRecentProductAdapter, mMostVisitedProductAdapter,
+                           mRatedProductAdapter, mAmazingAdapter;
+
     private CategoryAdapter mCategoryAdapter;
 
 
@@ -107,6 +104,12 @@ public class HomeFragment extends Fragment {
                 initRecyclerAdapter(mRecyclerViewRatedProduct, mRatedProductAdapter, items);
             }
         });
+        mRepository.fetchRatedProducts(2, new Repository.Callbacks() {
+            @Override
+            public void onItemResponse(List<ProductsItem> items) {
+                initRecyclerAdapter(mRecyclerViewAmazing, mAmazingAdapter, items);
+            }
+        });
         mRepository.fetchCategory(1, new Repository.CategoryCallbacks() {
             @Override
             public void onItemResponse(List<CategoriesItem> items) {
@@ -122,6 +125,7 @@ public class HomeFragment extends Fragment {
         mRecyclerViewMostVisitedProduct = view.findViewById(R.id.fragment_home_recyclerview_most_visited);
         mRecyclerViewRatedProduct = view.findViewById(R.id.fragment_home_recyclerview_top_rated);
         mRecyclerCategoryProduct = view.findViewById(R.id.fragment_home_recyclerview_category);
+        mRecyclerViewAmazing = view.findViewById(R.id.fragment_home_recyclerview_offered_item);
     }
 
     private void initRecyclerAdapter(RecyclerView recyclerView,

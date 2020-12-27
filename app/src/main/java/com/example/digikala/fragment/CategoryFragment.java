@@ -3,20 +3,15 @@ package com.example.digikala.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.digikala.R;
 import com.example.digikala.adapter.CategoryAdapter;
-import com.example.digikala.adapter.CategoryListAdapter;
 import com.example.digikala.adapter.ProductAdapter;
 import com.example.digikala.model.CategoriesItem;
 import com.example.digikala.model.ProductsItem;
@@ -29,11 +24,17 @@ public class CategoryFragment extends Fragment implements CategoryAdapter.OnCate
 
     public static final String TAG = "CategoryFragment";
 
-    private RecyclerView mRecyclerViewCategoryOne, mRecyclerViewCategoryTwo, mRecyclerViewCategoryThree,
-    mRecyclerViewCategoryFour, mRecyclerViewCategoryFive, mRecyclerViewCategorySix, mRecyclerViewCategorySeven,
-    mRecyclerViewCategoryEight, mRecyclerViewCategoryNine, mRecyclerViewCategoryTen;
+    private RecyclerView mRecyclerViewCategoryOne, mRecyclerViewCategoryTwo,
+            mRecyclerViewCategoryThree, mRecyclerViewCategoryFour, mRecyclerViewCategoryFive,
+            mRecyclerViewCategorySix, mRecyclerViewCategorySeven, mRecyclerViewCategoryEight,
+            mRecyclerViewCategoryNine, mRecyclerViewCategoryTen;
 
-    private ProductAdapter mProductAdapterCategory;
+    private ProductAdapter mAdapterOne, mAdapterTwo, mAdapterThree, mAdapterFour, mAdapterFive,
+            mAdapterSix, mAdapterSeven, mAdapterEight, mAdapterNine, mAdapterTen;
+
+    private TextView mTextOne, mTextTwo, mTextThree, mTextFour, mTextFive, mTextSix, mTextSeven,
+            mTextEight, mTextNine, mTextTen;
+
     private Repository mRepository;
     private List<Integer> mCategoryIds = new ArrayList<>();
 
@@ -56,7 +57,8 @@ public class CategoryFragment extends Fragment implements CategoryAdapter.OnCate
         mRepository.fetchCategory(1, new Repository.CategoryCallbacks() {
             @Override
             public void onItemResponse(List<CategoriesItem> items) {
-                initCategoryRecyclerAdapter(initCategoryIds(items));
+                updateCategoryRecyclerAdapter(initCategoryIds(items));
+                setTextName(items);
             }
         });
 
@@ -75,50 +77,185 @@ public class CategoryFragment extends Fragment implements CategoryAdapter.OnCate
     }
 
     private void findViews(View view) {
-        mRecyclerViewCategoryOne= view.findViewById(R.id.category_recycler_one);
-        mRecyclerViewCategoryTwo= view.findViewById(R.id.category_recycler_two);
-        mRecyclerViewCategoryThree= view.findViewById(R.id.category_recycler_three);
+        mRecyclerViewCategoryOne = view.findViewById(R.id.category_recycler_one);
+        mRecyclerViewCategoryTwo = view.findViewById(R.id.category_recycler_two);
+        mRecyclerViewCategoryThree = view.findViewById(R.id.category_recycler_three);
+        mRecyclerViewCategoryFour = view.findViewById(R.id.category_recycler_four);
+        mRecyclerViewCategoryFive = view.findViewById(R.id.category_recycler_five);
+        mRecyclerViewCategorySix = view.findViewById(R.id.category_recycler_six);
+        mRecyclerViewCategorySeven = view.findViewById(R.id.category_recycler_seven);
+        mRecyclerViewCategoryEight = view.findViewById(R.id.category_recycler_eight);
+        mRecyclerViewCategoryNine = view.findViewById(R.id.category_recycler_nine);
+        mRecyclerViewCategoryTen = view.findViewById(R.id.category_recycler_ten);
 
-    }
+        mTextOne = view.findViewById(R.id.category_name_one);
+        mTextTwo = view.findViewById(R.id.category_name_two);
+        mTextThree = view.findViewById(R.id.category_name_three);
+        mTextFour = view.findViewById(R.id.category_name_four);
+        mTextFive = view.findViewById(R.id.category_name_five);
+        mTextSix = view.findViewById(R.id.category_name_six);
+        mTextSeven = view.findViewById(R.id.category_name_seven);
+        mTextEight = view.findViewById(R.id.category_name_eight);
+        mTextNine = view.findViewById(R.id.category_name_nine);
+        mTextTen = view.findViewById(R.id.category_name_ten);
 
-    private void initCategoryRecyclerAdapter(List<Integer> ids) {
-        mRecyclerViewCategoryOne.setLayoutManager(new LinearLayoutManager(getContext(),
-                LinearLayoutManager.HORIZONTAL, false));
-        mRecyclerViewCategoryTwo.setLayoutManager(new LinearLayoutManager(getContext(),
-                LinearLayoutManager.HORIZONTAL, false));
-        mRecyclerViewCategoryThree.setLayoutManager(new LinearLayoutManager(getContext(),
-                LinearLayoutManager.HORIZONTAL, false));
-
-        updateCategoryRecyclerAdapter(ids);
     }
 
     private void updateCategoryRecyclerAdapter(List<Integer> ids) {
-        for (int i = 0; i < ids.size(); i++) {
-            mRepository.fetchCategoryProduct(1, ids.get(i), new Repository.Callbacks() {
-                @Override
-                public void onItemResponse(List<ProductsItem> items) {
-                    if (mProductAdapterCategory == null) {
-                        mProductAdapterCategory = new ProductAdapter(getContext(), items);
-                        mRecyclerViewCategoryOne.setAdapter(mProductAdapterCategory);
-                    } else {
-                        mProductAdapterCategory.setProductsItem(items);
-                        mProductAdapterCategory.notifyDataSetChanged();
-                    }
+        mRepository.fetchCategoryProduct(1, ids.get(0), new Repository.Callbacks() {
+            @Override
+            public void onItemResponse(List<ProductsItem> items) {
+                if (mAdapterOne == null) {
+                    mAdapterOne = new ProductAdapter(getContext(), items);
+                    mRecyclerViewCategoryOne.setAdapter(mAdapterOne);
+                } else {
+                    mAdapterOne.setProductsItem(items);
+                    mAdapterOne.notifyDataSetChanged();
                 }
-            });
-        }
+            }
+        });
 
+        mRepository.fetchCategoryProduct(1, ids.get(1), new Repository.Callbacks() {
+            @Override
+            public void onItemResponse(List<ProductsItem> items) {
+                if (mAdapterTwo == null) {
+                    mAdapterTwo = new ProductAdapter(getContext(), items);
+                    mRecyclerViewCategoryTwo.setAdapter(mAdapterTwo);
+                } else {
+                    mAdapterTwo.setProductsItem(items);
+                    mAdapterTwo.notifyDataSetChanged();
+                }
+            }
+        });
 
+        mRepository.fetchCategoryProduct(1, ids.get(2), new Repository.Callbacks() {
+            @Override
+            public void onItemResponse(List<ProductsItem> items) {
+                if (mAdapterThree == null) {
+                    mAdapterThree = new ProductAdapter(getContext(), items);
+                    mRecyclerViewCategoryThree.setAdapter(mAdapterThree);
+                } else {
+                    mAdapterThree.setProductsItem(items);
+                    mAdapterThree.notifyDataSetChanged();
+                }
+            }
+        });
+
+        mRepository.fetchCategoryProduct(1, ids.get(3), new Repository.Callbacks() {
+            @Override
+            public void onItemResponse(List<ProductsItem> items) {
+                if (mAdapterFour == null) {
+                    mAdapterFour = new ProductAdapter(getContext(), items);
+                    mRecyclerViewCategoryFour.setAdapter(mAdapterFour);
+                } else {
+                    mAdapterFour.setProductsItem(items);
+                    mAdapterFour.notifyDataSetChanged();
+                }
+            }
+        });
+        mRepository.fetchCategoryProduct(1, ids.get(4), new Repository.Callbacks() {
+            @Override
+            public void onItemResponse(List<ProductsItem> items) {
+                if (mAdapterFive == null) {
+                    mAdapterFive = new ProductAdapter(getContext(), items);
+                    mRecyclerViewCategoryFive.setAdapter(mAdapterFive);
+                } else {
+                    mAdapterFive.setProductsItem(items);
+                    mAdapterFive.notifyDataSetChanged();
+                }
+            }
+        });
+        mRepository.fetchCategoryProduct(1, ids.get(5), new Repository.Callbacks() {
+            @Override
+            public void onItemResponse(List<ProductsItem> items) {
+                if (mAdapterSix == null) {
+                    mAdapterSix = new ProductAdapter(getContext(), items);
+                    mRecyclerViewCategorySix.setAdapter(mAdapterSix);
+                } else {
+                    mAdapterSix.setProductsItem(items);
+                    mAdapterSix.notifyDataSetChanged();
+                }
+            }
+        });
+        mRepository.fetchCategoryProduct(1, ids.get(6), new Repository.Callbacks() {
+            @Override
+            public void onItemResponse(List<ProductsItem> items) {
+                if (mAdapterSeven == null) {
+                    mAdapterSeven = new ProductAdapter(getContext(), items);
+                    mRecyclerViewCategorySeven.setAdapter(mAdapterSeven);
+                } else {
+                    mAdapterSeven.setProductsItem(items);
+                    mAdapterSeven.notifyDataSetChanged();
+                }
+            }
+        });
+        mRepository.fetchCategoryProduct(1, ids.get(7), new Repository.Callbacks() {
+            @Override
+            public void onItemResponse(List<ProductsItem> items) {
+                if (mAdapterEight == null) {
+                    mAdapterEight = new ProductAdapter(getContext(), items);
+                    mRecyclerViewCategoryEight.setAdapter(mAdapterEight);
+                } else {
+                    mAdapterEight.setProductsItem(items);
+                    mAdapterEight.notifyDataSetChanged();
+                }
+            }
+        });
+        mRepository.fetchCategoryProduct(1, ids.get(8), new Repository.Callbacks() {
+            @Override
+            public void onItemResponse(List<ProductsItem> items) {
+                if (mAdapterNine == null) {
+                    mAdapterNine = new ProductAdapter(getContext(), items);
+                    mRecyclerViewCategoryNine.setAdapter(mAdapterNine);
+                } else {
+                    mAdapterNine.setProductsItem(items);
+                    mAdapterNine.notifyDataSetChanged();
+                }
+            }
+        });
+        mRepository.fetchCategoryProduct(1, ids.get(9), new Repository.Callbacks() {
+            @Override
+            public void onItemResponse(List<ProductsItem> items) {
+                if (mAdapterTen == null) {
+                    mAdapterTen = new ProductAdapter(getContext(), items);
+                    mRecyclerViewCategoryTen.setAdapter(mAdapterTen);
+                } else {
+                    mAdapterTen.setProductsItem(items);
+                    mAdapterTen.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
-    private List<Integer> initCategoryIds(List<CategoriesItem> items){
+
+    private List<Integer> initCategoryIds(List<CategoriesItem> items) {
         List<Integer> ids = new ArrayList<>();
-        for (int i = 0; i <items.size() ; i++) {
-            if(!ids.contains(items.get(i).getId())){
+        for (int i = 0; i < items.size(); i++) {
+            if (!ids.contains(items.get(i).getId())) {
                 ids.add(items.get(i).getId());
             }
         }
         return ids;
+    }
+
+    private void setTextName(List<CategoriesItem> items) {
+        List<String> names = new ArrayList<>();
+        for (int i = 0; i < items.size(); i++) {
+            if (!names.equals(items.get(i).getName())) {
+                names.add(items.get(i).getName());
+            }
+        }
+        mTextOne.setText(names.get(0));
+        mTextTwo.setText(names.get(1));
+        mTextThree.setText(names.get(2));
+        mTextFour.setText(names.get(3));
+        mTextFive.setText(names.get(4));
+        mTextSix.setText(names.get(5));
+        mTextSeven.setText(names.get(6));
+        mTextEight.setText(names.get(7));
+        mTextNine.setText(names.get(8));
+        mTextTen.setText(names.get(9));
+
     }
 
     @Override
