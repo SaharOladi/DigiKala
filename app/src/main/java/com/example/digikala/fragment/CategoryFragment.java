@@ -3,14 +3,35 @@ package com.example.digikala.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.digikala.R;
+import com.example.digikala.adapter.CategoryAdapter;
+import com.example.digikala.model.CategoriesItem;
+import com.example.digikala.repository.Repository;
 
-public class CategoryFragment extends Fragment {
+import java.util.List;
+
+public class CategoryFragment extends Fragment implements CategoryAdapter.OnCategoryClickListener {
+
+    public static final String TAG = "CategoryFragment";
+
+    private RecyclerView mRecyclerViewCategory;
+    private CategoryAdapter mProductAdapterCategory;
+    private ProgressBar mProgressBar;
+    private TextView mTextProgressBar;
+
+    private Repository mRepository;
+
 
     public CategoryFragment() {
         // Required empty public constructor
@@ -26,12 +47,63 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mRepository = new Repository();
+
+        mRepository.fetchCategory(1, new Repository.CategoryCallbacks() {
+            @Override
+            public void onItemResponse(List<CategoriesItem> items) {
+                initCategoryRecyclerAdapter(items);
+                mProgressBar.setVisibility(View.GONE);
+                mTextProgressBar.setVisibility(View.GONE);
+
+            }
+        });
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_category, container, false);
+        View view = inflater.inflate(R.layout.fragment_category, container, false);
+
+        findViews(view);
+
+        return view;
     }
+
+    private void findViews(View view) {
+        mRecyclerViewCategory = view.findViewById(R.id.category_recycler_one);
+        mProgressBar = view.findViewById(R.id.progress_bar);
+        mTextProgressBar = view.findViewById(R.id.textView_progressbar);
+    }
+
+    private void initCategoryRecyclerAdapter(List<CategoriesItem> categoriesItems) {
+
+        mRecyclerViewCategory.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false));
+        updateCategoryRecyclerAdapter(categoriesItems);
+    }
+
+    private void updateCategoryRecyclerAdapter(List<CategoriesItem> categoriesItems) {
+
+        if (mProductAdapterCategory == null) {
+            mProductAdapterCategory = new CategoryAdapter(getContext(), categoriesItems);
+            mRecyclerViewCategory.setAdapter(mProductAdapterCategory);
+        } else {
+            mProductAdapterCategory.setCategoriesItem(categoriesItems);
+            mProductAdapterCategory.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onCategoryClick(int id) {
+//        getActivity().getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.fragment_container, CategoryListFragment.newInstance(id))
+//                .commit();
+//        Log.d(TAG, "onCategoryClick: "+id);
+    }
+
+
 }

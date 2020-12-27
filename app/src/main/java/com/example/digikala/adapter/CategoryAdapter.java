@@ -105,5 +105,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     }
 
+    public interface OnCategoryClickListener {
+        void onCategoryClick(int id);
+    }
+
 }
 
