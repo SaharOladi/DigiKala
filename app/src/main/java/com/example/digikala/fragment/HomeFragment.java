@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ import com.smarteist.autoimageslider.SliderView;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
 
     public static final String TAG = "HomeFragment";
 
@@ -181,6 +182,5 @@ public class HomeFragment extends Fragment {
             categoryAdapter.notifyDataSetChanged();
         }
     }
-
 
 }

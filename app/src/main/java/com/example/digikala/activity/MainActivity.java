@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().
-                    add(R.id.fragment_container_main_activity, HomeFragment.newInstance())
+                    add(R.id.fragment_container, HomeFragment.newInstance())
                     .commit();
         }
 
@@ -56,21 +56,21 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.navigation_shoppingBag:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container_main_activity,
+                                .replace(R.id.fragment_container,
                                         ShoppingFragment.newInstance())
                                 .hide(HomeFragment.newInstance())
                                 .commit();
                         return true;
                     case R.id.navigation_profile:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container_main_activity,
+                                .replace(R.id.fragment_container,
                                         UserFragment.newInstance())
                                 .hide(HomeFragment.newInstance())
                                 .commit();
                         return true;
                     case R.id.navigation_category:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container_main_activity,
+                                .replace(R.id.fragment_container,
                                         CategoryFragment.newInstance())
                                 .hide(HomeFragment.newInstance())
 
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.navigation_home:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container_main_activity,
+                                .replace(R.id.fragment_container,
                                         HomeFragment.newInstance())
                                 .hide(HomeFragment.newInstance())
 

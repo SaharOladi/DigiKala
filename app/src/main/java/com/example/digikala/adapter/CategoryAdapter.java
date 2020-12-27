@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.digikala.R;
+import com.example.digikala.fragment.CategoryListFragment;
 import com.example.digikala.model.CategoriesItem;
 import com.example.digikala.model.ImagesItem;
 
@@ -53,15 +54,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     @Override
     public void onBindViewHolder(@NonNull CategoryHolder holder, int position) {
         CategoriesItem categoriesItem = mCategoriesItems.get(position);
-
         holder.bindCategory(categoriesItem);
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.fragment_container, CategoryListFragment.newInstance(categoriesItem.getId()))
-//                        .commit();
+                ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, CategoryListFragment.newInstance(categoriesItem.getId()))
+                        .commit();
 
             }
         });
@@ -103,10 +102,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                     .into(mCategoryImage);
         }
 
-    }
-
-    public interface OnCategoryClickListener {
-        void onCategoryClick(int id);
     }
 
 }

@@ -5,13 +5,13 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.digikala.R;
-import com.example.digikala.adapter.CategoryAdapter;
 import com.example.digikala.adapter.ProductAdapter;
 import com.example.digikala.model.CategoriesItem;
 import com.example.digikala.model.ProductsItem;
@@ -20,7 +20,7 @@ import com.example.digikala.repository.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryFragment extends Fragment implements CategoryAdapter.OnCategoryClickListener {
+public class CategoryFragment extends Fragment{
 
     public static final String TAG = "CategoryFragment";
 
@@ -256,10 +256,6 @@ public class CategoryFragment extends Fragment implements CategoryAdapter.OnCate
         mTextNine.setText(names.get(8));
         mTextTen.setText(names.get(9));
 
-    }
-
-    @Override
-    public void onCategoryClick(int id) {
     }
 
 
