@@ -23,7 +23,7 @@
     <string name="delete_card_item">حذف </string>
     <string name="count">تعداد </string>
     <string name="final_price">قیمت نهایی </string>
-    <string name="toman">%1$s, تومان</string>
+    <string name="toman">  تومان</string>
     <string name="final_sale">جمع کل خرید</string>
     <string name="final_shop">خرید خود را نهایی کنید</string>
     <string name="offer_product">پیشنهادات شگفت انگیز</string>
@@ -33,6 +33,14 @@
     <string name="retry">تلاش مجدد</string>
     <string name="no_connection">اتصال اینترنت وجود ندارد</string>
     <string name="whole_item">مشاهده همه</string>
+    <string name="sorting">مرتب سازی</string>
+    <string name="popularity">پر بازدیدترین</string>
+    <string name="high_to_low">قیمت از زیاد به کم</string>
+    <string name="low_to_high">قیمت از کم به زیاد</string>
+
+    <string name="newest">جدیدترین</string>
+
+    <string name="filtering">فیلتر کردن</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

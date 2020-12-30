@@ -180,6 +180,29 @@ public class Repository {
         });
     }
 
+    public void fetchCategoryProductByOrder(int page, int id, String orderBy, Callbacks callBacks) {
+        HashMap<String, String> localMap = new HashMap<>();
+
+        localMap.putAll(BASE);
+        localMap.put("page", String.valueOf(page));
+        localMap.put("category", String.valueOf(id));
+        localMap.put("orderby", orderBy);
+
+        mRequestService.getProducts(localMap).enqueue(new Callback<List<ProductsItem>>() {
+            @Override
+            public void onResponse(Call<List<ProductsItem>> call, Response<List<ProductsItem>> response) {
+                List<ProductsItem> categoryItems = response.body();
+                //update adapter of recyclerview
+                callBacks.onItemResponse(categoryItems);
+            }
+
+            @Override
+            public void onFailure(Call<List<ProductsItem>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+    }
+
 
     public void fetchSingleProduct(int id, SingleCallbacks callBacks) {
         HashMap<String, String> insideMap = new HashMap<>();
