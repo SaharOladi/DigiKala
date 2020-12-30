@@ -79,7 +79,6 @@ public class OrderDialogFragment extends DialogFragment {
                 })
                 .setNegativeButton("خیر", null)
                 .setView(view)
-                .setTitle("مرتب سازی بر اساس ")
                 .create();
 
         return alertDialog;

@@ -20,6 +20,7 @@ import com.example.digikala.adapter.SliderAdapter;
 import com.example.digikala.model.ImagesItem;
 import com.example.digikala.model.ProductsItem;
 import com.example.digikala.repository.Repository;
+import com.example.digikala.utils.ShoppingPreferences;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -29,6 +30,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.safety.Whitelist;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDetailFragment extends Fragment {
@@ -42,7 +44,8 @@ public class ProductDetailFragment extends Fragment {
 
     private TextView mRegularPrice, mFinalePrice, mDescription, mName;
     private Button mAddToBag;
-
+    private int[] mIdsArray = new int[10];
+    private int mIndex = 0;
 
     public ProductDetailFragment() {
         // Required empty public constructor
@@ -115,8 +118,15 @@ public class ProductDetailFragment extends Fragment {
         mAddToBag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mIndex < mIdsArray.length)
+                    mIdsArray[mIndex] = mProduct.getId();
 
+                ShoppingPreferences.setPrefIntArray(getContext(), mIdsArray);
+                ((AppCompatActivity) getContext()).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, ShoppingFragment.newInstance())
+                        .commit();
 
+                mIndex++;
             }
         });
     }

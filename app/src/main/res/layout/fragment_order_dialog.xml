@@ -6,6 +6,16 @@
     android:layout_margin="8dp"
     android:padding="8dp">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="مرتب سازی بر اساس  "
+        android:fontFamily="@font/far_trafc_bd"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"/>
+
     <RadioButton
         android:id="@+id/popularity"
         android:layout_width="match_parent"
