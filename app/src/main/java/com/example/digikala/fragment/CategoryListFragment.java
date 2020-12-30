@@ -108,8 +108,8 @@ public class CategoryListFragment extends Fragment {
     public void updateRecyclerAdapter(List<ProductsItem> productsItems) {
 
         if (mAdapter == null) {
-            mAdapter = new ProductCategoryAdapter(getContext(), productsItems);
-            mRecyclerView.setAdapter(mAdapter);
+        mAdapter = new ProductCategoryAdapter(getContext(), productsItems);
+        mRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.setProductsItem(productsItems);
             mAdapter.notifyDataSetChanged();
@@ -128,14 +128,11 @@ public class CategoryListFragment extends Fragment {
             mRepository.fetchCategoryProductByOrder(1, mCategoryId, order, new Repository.Callbacks() {
                 @Override
                 public void onItemResponse(List<ProductsItem> items) {
-                    initRecyclerAdapter(items);
+                    if (items != null)
+                        initRecyclerAdapter(items);
                 }
             });
-
         }
-
-
     }
-
 
 }

@@ -4,10 +4,14 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.fonts.FontFamily;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
@@ -16,9 +20,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.example.digikala.R;
+import com.example.digikala.activity.SplashActivity;
 import com.example.digikala.model.ProductsItem;
 import com.example.digikala.repository.Repository;
 
@@ -62,7 +69,7 @@ public class OrderDialogFragment extends DialogFragment {
         findDialogViews(view);
         setListener();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
                 .setPositiveButton("اعمال مرتب سازی", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -71,10 +78,13 @@ public class OrderDialogFragment extends DialogFragment {
                     }
                 })
                 .setNegativeButton("خیر", null)
-                .setView(view);
+                .setView(view)
+                .setTitle("مرتب سازی بر اساس ")
+                .create();
 
-        return builder.create();
+        return alertDialog;
     }
+
 
 
     private void findDialogViews(View view) {

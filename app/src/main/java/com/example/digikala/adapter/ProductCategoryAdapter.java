@@ -8,10 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.digikala.R;
+import com.example.digikala.fragment.ProductDetailFragment;
 import com.example.digikala.model.ImagesItem;
 import com.example.digikala.model.ProductsItem;
 
@@ -54,8 +56,15 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<ProductCategory
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, ProductDetailFragment.newInstance(productItem))
+                                .commit();
 
-                //TODO
+                    }
+                });
 
             }
         });
