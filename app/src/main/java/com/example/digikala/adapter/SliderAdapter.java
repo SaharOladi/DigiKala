@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.digikala.R;
-import com.example.digikala.model.ImagesItem;
+import com.example.digikala.model.product.ImagesItem;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 
 import java.util.ArrayList;

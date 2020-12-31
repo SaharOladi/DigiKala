@@ -1,7 +1,6 @@
 package com.example.digikala.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.digikala.R;
 import com.example.digikala.fragment.CategoryListFragment;
-import com.example.digikala.model.CategoriesItem;
-import com.example.digikala.model.ImagesItem;
+import com.example.digikala.model.product.CategoriesItem;
+import com.example.digikala.model.product.ImagesItem;
 
 import java.util.List;
 

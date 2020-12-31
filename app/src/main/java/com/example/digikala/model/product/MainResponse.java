@@ -1,4 +1,4 @@
-package com.example.digikala.model;
+package com.example.digikala.model.product;
 
 import java.util.List;
 

@@ -7,11 +7,14 @@ import static com.example.digikala.network.NetworkParam.BASE_URL;
 
 public class RetrofitInstance {
 
+
     public static Retrofit getInstance() {
+
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
     }
+
 
 }
 

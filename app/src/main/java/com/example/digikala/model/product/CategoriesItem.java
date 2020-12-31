@@ -1,8 +1,8 @@
-package com.example.digikala.model;
+package com.example.digikala.model.product;
 
 import com.google.gson.annotations.SerializedName;
 
-public class TagsItem {
+public class CategoriesItem {
 
     @SerializedName("name")
     private String name;
@@ -13,6 +13,11 @@ public class TagsItem {
     @SerializedName("slug")
     private String slug;
 
+    @SerializedName("image")
+    private ImagesItem mImages;
+
+    @SerializedName("count")
+    private Integer mCount;
 
     public String getName() {
         return name;
@@ -26,4 +31,13 @@ public class TagsItem {
         return slug;
     }
 
+    public ImagesItem getImages() {
+        return mImages;
+    }
+
+    public Integer getCount() {
+        return mCount;
+    }
+
 }
+

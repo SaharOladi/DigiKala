@@ -3,8 +3,9 @@ package com.example.digikala.repository;
 import android.util.Log;
 
 
-import com.example.digikala.model.CategoriesItem;
-import com.example.digikala.model.ProductsItem;
+import com.example.digikala.model.customer.CreateCustomer;
+import com.example.digikala.model.product.CategoriesItem;
+import com.example.digikala.model.product.ProductsItem;
 import com.example.digikala.network.RequestService;
 import com.example.digikala.network.RetrofitInstance;
 
@@ -225,6 +226,26 @@ public class Repository {
         });
     }
 
+    public void sendCustomer(CreateCustomer customersItem, CustomerCallbacks customerCallbacks) {
+        HashMap<String, String> insideMap = new HashMap<>();
+        insideMap.putAll(BASE);
+
+        mRequestService.createCustomer(customersItem, insideMap).enqueue(new Callback<CreateCustomer>() {
+            @Override
+            public void onResponse(Call<CreateCustomer> call, Response<CreateCustomer> response) {
+                Log.d(TAG, "onResponse: " + response.body());
+                Log.d(TAG, "onResponse: " + response.code());
+
+            }
+
+            @Override
+            public void onFailure(Call<CreateCustomer> call, Throwable t) {
+
+            }
+        });
+
+    }
+
 
     public void fetchSearchProducts(String query, Callbacks callBacks) {
 
@@ -259,6 +280,10 @@ public class Repository {
 
     public interface SingleCallbacks {
         void onItemResponse(ProductsItem item);
+    }
+
+    public interface CustomerCallbacks {
+        void onItemResponse(CreateCustomer createCustomer);
     }
 
 

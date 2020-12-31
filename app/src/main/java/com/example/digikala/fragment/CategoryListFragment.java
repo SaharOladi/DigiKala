@@ -1,8 +1,5 @@
 package com.example.digikala.fragment;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,17 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 
 import com.example.digikala.R;
 import com.example.digikala.adapter.ProductCategoryAdapter;
-import com.example.digikala.model.ProductsItem;
+import com.example.digikala.model.product.ProductsItem;
 import com.example.digikala.repository.Repository;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class CategoryListFragment extends Fragment {
     public static final String ARGS_ID = "ARGS_ID";

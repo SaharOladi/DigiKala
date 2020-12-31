@@ -11,11 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import com.example.digikala.R;
 import com.example.digikala.adapter.CardAdapter;
-import com.example.digikala.model.ProductsItem;
+import com.example.digikala.model.customer.CreateCustomer;
+import com.example.digikala.model.customer.CustomerBilling;
+import com.example.digikala.model.customer.CustomerShipping;
+import com.example.digikala.model.product.ProductsItem;
 import com.example.digikala.repository.Repository;
 import com.example.digikala.utils.ShoppingPreferences;
 
@@ -60,6 +62,36 @@ public class ShoppingFragment extends Fragment {
 
         findViews(view);
         setRecycler();
+
+
+        CreateCustomer customer = new CreateCustomer();
+        customer.setEmail("digikala_test@gmail.com");
+        customer.setFirstName("digikalatest");
+        customer.setLastName("testdigikala");
+        customer.setUserName("testdigikalawoohcamranc");
+        CustomerShipping customerShipping = new CustomerShipping("maktab",
+                "testdigikala", "digikalalt", "jdjakd",
+                "jdaj", "tehran", "djaf", "332", "iran");
+
+        CustomerBilling customerBilling = new CustomerBilling("maktab",
+                "testdigikala", "digikalalt", "jdjakd",
+                "jdaj", "tehran", "djaf", "332", "iran",
+                "testdigikalawreo@gmail.com", "83248328491");
+
+        customer.setShipping(customerShipping);
+        customer.setBilling(customerBilling);
+
+        mFinalShop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRepository.sendCustomer(customer, new Repository.CustomerCallbacks() {
+                    @Override
+                    public void onItemResponse(CreateCustomer createCustomer) {
+                        Log.d(TAG, "onItemResponse: " + createCustomer.getUserName());
+                    }
+                });
+            }
+        });
         return view;
     }
 
@@ -75,7 +107,6 @@ public class ShoppingFragment extends Fragment {
                     initRecyclerAdapter(mRecyclerView, mCardAdapter, itemList);
                 }
             });
-
 
     }
 

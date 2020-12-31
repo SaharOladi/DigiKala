@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.digikala.R;
-import com.example.digikala.model.ImagesItem;
-import com.example.digikala.model.ProductsItem;
+import com.example.digikala.model.product.ImagesItem;
+import com.example.digikala.model.product.ProductsItem;
 import com.example.digikala.utils.ShoppingPreferences;
 
 import java.util.List;

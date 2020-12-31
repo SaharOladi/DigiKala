@@ -1,6 +1,5 @@
 package com.example.digikala.fragment;
 
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 
@@ -11,26 +10,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.digikala.R;
 import com.example.digikala.adapter.SliderAdapter;
-import com.example.digikala.model.ImagesItem;
-import com.example.digikala.model.ProductsItem;
+import com.example.digikala.model.product.ImagesItem;
+import com.example.digikala.model.product.ProductsItem;
 import com.example.digikala.repository.Repository;
 import com.example.digikala.utils.ShoppingPreferences;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
-import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.safety.Whitelist;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDetailFragment extends Fragment {
