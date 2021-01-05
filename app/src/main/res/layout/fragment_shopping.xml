@@ -22,7 +22,7 @@
             android:weightSum="2">
 
             <TextView
-                android:id="@+id/card_sale_price"
+                android:id="@+id/card_sale_price_fragment_shopping"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

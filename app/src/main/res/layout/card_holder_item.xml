@@ -39,7 +39,7 @@
                 android:layout_marginRight="2dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/far_roya_bd"
-                android:text="@string/final_sale"
+                android:text="@string/item_sale"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />

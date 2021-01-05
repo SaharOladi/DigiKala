@@ -90,7 +90,7 @@ public class ShoppingFragment extends Fragment {
     private void findViews(View view) {
         mRecyclerView = view.findViewById(R.id.card_recycler_view);
         mFinalShop = view.findViewById(R.id.final_shop);
-        mSalePrice = view.findViewById(R.id.card_sale_price);
+        mSalePrice = view.findViewById(R.id.card_sale_price_fragment_shopping);
     }
 
     private void initRecyclerAdapter(RecyclerView recyclerView,
@@ -114,42 +114,14 @@ public class ShoppingFragment extends Fragment {
             cardAdapter.setProductsItem(productItems);
             cardAdapter.notifyDataSetChanged();
         }
-    }
 
-    public void updateUI() {
-        List<ProductsItem> productsItems = mShoppingRepository.getProducts();
+        mSalePrice.setText(cardAdapter.getFinalPriceValue() +
+                " " +
+                getContext().getResources().getString(R.string.toman));
 
-        if (mCardAdapter == null) {
-            mCardAdapter = new CardAdapter(getContext(), productsItems);
-            mRecyclerView.setAdapter(mCardAdapter);
-        } else {
-            mCardAdapter.setProductsItem(productsItems);
-            mCardAdapter.notifyDataSetChanged();
-        }
+        Log.d(TAG, "updateRecyclerAdapter: " + cardAdapter.getFinalPriceValue());
+
 
     }
 
-    private void calculatePrice(List<String> productPrice) {
-        double totalPrice = 0;
-        List<Double> calculateTotalPrice = new ArrayList<>();
-        for (String price : productPrice) {
-            calculateTotalPrice.add(Double.parseDouble(price));
-        }
-        for (Double price : calculateTotalPrice) {
-            totalPrice += price;
-        }
-        mSalePrice.setText(Double.toString(totalPrice));
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateUI();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        updateUI();
-    }
 }

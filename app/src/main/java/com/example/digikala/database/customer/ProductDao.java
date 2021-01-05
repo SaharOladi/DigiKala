@@ -1,4 +1,4 @@
-package com.example.digikala.database;
+package com.example.digikala.database.customer;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

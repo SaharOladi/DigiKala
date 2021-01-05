@@ -279,6 +279,17 @@ public class ProductsItem implements Serializable {
     @ColumnInfo(name = "attributes")
     private List<Object> attributes;
 
+    @ColumnInfo(name = "allPrice")
+    private Double allPrice;
+
+    public Double getAllPrice() {
+        return allPrice;
+    }
+
+    public void setAllPrice(Double allPrice) {
+        this.allPrice = allPrice;
+    }
+
     public List<Object> getUpsellIds() {
         return upsellIds;
     }
