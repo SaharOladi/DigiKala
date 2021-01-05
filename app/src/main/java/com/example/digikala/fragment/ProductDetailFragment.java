@@ -17,6 +17,7 @@ import com.example.digikala.adapter.SliderAdapter;
 import com.example.digikala.model.product.ImagesItem;
 import com.example.digikala.model.product.ProductsItem;
 import com.example.digikala.repository.Repository;
+import com.example.digikala.repository.ShoppingRepository;
 import com.example.digikala.utils.ShoppingPreferences;
 import com.smarteist.autoimageslider.SliderView;
 
@@ -30,6 +31,7 @@ public class ProductDetailFragment extends Fragment {
     public static final String ARGS_PRODUCT = "ARGS_PRODUCT_DETAIL";
 
     private Repository mRepository;
+    private ShoppingRepository mShoppingRepository;
     private ProductsItem mProduct;
 
     private SliderAdapter mSliderAdapter;
@@ -37,8 +39,6 @@ public class ProductDetailFragment extends Fragment {
 
     private TextView mRegularPrice, mFinalePrice, mDescription, mName;
     private Button mAddToBag;
-    private int[] mIdsArray = new int[10];
-    private int mIndex = 0;
 
     public ProductDetailFragment() {
         // Required empty public constructor
@@ -58,6 +58,7 @@ public class ProductDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mRepository = new Repository();
+        mShoppingRepository = ShoppingRepository.getInstance(getContext());
         mProduct = (ProductsItem) getArguments().get(ARGS_PRODUCT);
     }
 
@@ -111,15 +112,11 @@ public class ProductDetailFragment extends Fragment {
         mAddToBag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mIndex < mIdsArray.length)
-                    mIdsArray[mIndex] = mProduct.getId();
 
-                ShoppingPreferences.setPrefIntArray(getContext(), mIdsArray);
+                mShoppingRepository.insertProduct(mProduct);
                 ((AppCompatActivity) getContext()).getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, ShoppingFragment.newInstance())
                         .commit();
-
-                mIndex++;
             }
         });
     }

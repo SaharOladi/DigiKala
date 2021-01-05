@@ -17,6 +17,7 @@ public class ShoppingPreferences {
     }
 
     public static void setShopPrefKey(Context context, int id) {
+
         getSharedPreferences(context)
                 .edit()
                 //productItem id
@@ -33,41 +34,5 @@ public class ShoppingPreferences {
 
     private static SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences(context.getPackageName(), context.MODE_PRIVATE);
-    }
-
-    public static void setPrefIntArray(Context context, int[] value) {
-        SharedPreferences.Editor prefEditor = getSharedPreferences(context).edit();
-        String s;
-        try {
-            JSONArray jsonArr = new JSONArray();
-            for (int i : value)
-                jsonArr.put(i);
-
-            JSONObject json = new JSONObject();
-            json.put(SHOP_PREF_KEY, jsonArr);
-
-            s = json.toString();
-        } catch (JSONException excp) {
-            s = "";
-        }
-
-        prefEditor.putString(SHOP_PREF_KEY, s);
-        prefEditor.commit();
-    }
-
-    public static int[] getPrefIntArray(Context context) {
-        SharedPreferences pref = getSharedPreferences(context);
-        String s = pref.getString(SHOP_PREF_KEY, "");
-        try {
-            JSONObject json = new JSONObject(new JSONTokener(s));
-            JSONArray jsonArr = json.getJSONArray(SHOP_PREF_KEY);
-
-            int[] result = new int[jsonArr.length()];
-            for (int i = 0; i < jsonArr.length(); i++)
-                result[i] = jsonArr.getInt(i);
-            return result;
-        } catch (JSONException excp) {
-            return null;
-        }
     }
 }

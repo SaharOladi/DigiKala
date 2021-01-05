@@ -2,12 +2,12 @@ package com.example.digikala.model.customer;
 
 import com.google.gson.annotations.SerializedName;
 
-public class CustomerShipping {
+public class Shipping {
     @SerializedName("company")
     private String mCompany;
 
-    public CustomerShipping(String company, String firstName, String lastName, String addressOne,
-                            String addressTwo, String city, String state, String postCode, String country) {
+    public Shipping(String company, String firstName, String lastName, String addressOne,
+                    String addressTwo, String city, String state, String postCode, String country) {
         mCompany = company;
         mFirstName = firstName;
         mLastName = lastName;

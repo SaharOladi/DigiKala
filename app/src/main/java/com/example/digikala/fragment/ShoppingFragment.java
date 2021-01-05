@@ -11,15 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.digikala.R;
 import com.example.digikala.adapter.CardAdapter;
-import com.example.digikala.model.customer.CreateCustomer;
-import com.example.digikala.model.customer.CustomerBilling;
-import com.example.digikala.model.customer.CustomerShipping;
+import com.example.digikala.model.customer.Customer;
 import com.example.digikala.model.product.ProductsItem;
 import com.example.digikala.repository.Repository;
-import com.example.digikala.utils.ShoppingPreferences;
+import com.example.digikala.repository.ShoppingRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +27,14 @@ public class ShoppingFragment extends Fragment {
 
     public static final String TAG = "ShoppingFragment";
     private Repository mRepository;
+    private ShoppingRepository mShoppingRepository;
 
     private RecyclerView mRecyclerView;
     private CardAdapter mCardAdapter;
 
-    private int mIndex = 0;
 
     private Button mFinalShop;
+    private TextView mSalePrice;
 
     public ShoppingFragment() {
         // Required empty public constructor
@@ -52,6 +52,7 @@ public class ShoppingFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mRepository = new Repository();
+        mShoppingRepository = ShoppingRepository.getInstance(getContext());
     }
 
     @Override
@@ -64,30 +65,14 @@ public class ShoppingFragment extends Fragment {
         setRecycler();
 
 
-        CreateCustomer customer = new CreateCustomer();
-        customer.setEmail("digikala_test@gmail.com");
-        customer.setFirstName("digikalatest");
-        customer.setLastName("testdigikala");
-        customer.setUserName("testdigikalawoohcamranc");
-        CustomerShipping customerShipping = new CustomerShipping("maktab",
-                "testdigikala", "digikalalt", "jdjakd",
-                "jdaj", "tehran", "djaf", "332", "iran");
-
-        CustomerBilling customerBilling = new CustomerBilling("maktab",
-                "testdigikala", "digikalalt", "jdjakd",
-                "jdaj", "tehran", "djaf", "332", "iran",
-                "testdigikalawreo@gmail.com", "83248328491");
-
-        customer.setShipping(customerShipping);
-        customer.setBilling(customerBilling);
-
         mFinalShop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRepository.sendCustomer(customer, new Repository.CustomerCallbacks() {
+                mRepository.sendCustomer("digikala.test@digikala.com", new Repository.CustomerCallbacks() {
                     @Override
-                    public void onItemResponse(CreateCustomer createCustomer) {
-                        Log.d(TAG, "onItemResponse: " + createCustomer.getUserName());
+                    public void onItemResponse(Customer createCustomer) {
+                        //TODO
+                        //successfully create a customer
                     }
                 });
             }
@@ -97,23 +82,15 @@ public class ShoppingFragment extends Fragment {
 
 
     private void setRecycler() {
-        List<ProductsItem> itemList = new ArrayList<>();
-        int[] itemIds = ShoppingPreferences.getPrefIntArray(getContext());
-        if (itemIds != null)
-            mRepository.fetchSingleProduct(itemIds[mIndex++], new Repository.SingleCallbacks() {
-                @Override
-                public void onItemResponse(ProductsItem item) {
-                    itemList.add(item);
-                    initRecyclerAdapter(mRecyclerView, mCardAdapter, itemList);
-                }
-            });
-
+        initRecyclerAdapter(mRecyclerView, mCardAdapter, mShoppingRepository.getProducts());
+        Log.d(TAG, "setRecycler: " + mShoppingRepository.getProducts().size());
     }
 
 
     private void findViews(View view) {
         mRecyclerView = view.findViewById(R.id.card_recycler_view);
         mFinalShop = view.findViewById(R.id.final_shop);
+        mSalePrice = view.findViewById(R.id.card_sale_price);
     }
 
     private void initRecyclerAdapter(RecyclerView recyclerView,
@@ -121,7 +98,7 @@ public class ShoppingFragment extends Fragment {
                                      List<ProductsItem> productItems) {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
-                LinearLayoutManager.HORIZONTAL, false));
+                LinearLayoutManager.VERTICAL, false));
 
         updateRecyclerAdapter(recyclerView, cardAdapter, productItems);
     }
@@ -137,5 +114,42 @@ public class ShoppingFragment extends Fragment {
             cardAdapter.setProductsItem(productItems);
             cardAdapter.notifyDataSetChanged();
         }
+    }
+
+    public void updateUI() {
+        List<ProductsItem> productsItems = mShoppingRepository.getProducts();
+
+        if (mCardAdapter == null) {
+            mCardAdapter = new CardAdapter(getContext(), productsItems);
+            mRecyclerView.setAdapter(mCardAdapter);
+        } else {
+            mCardAdapter.setProductsItem(productsItems);
+            mCardAdapter.notifyDataSetChanged();
+        }
+
+    }
+
+    private void calculatePrice(List<String> productPrice) {
+        double totalPrice = 0;
+        List<Double> calculateTotalPrice = new ArrayList<>();
+        for (String price : productPrice) {
+            calculateTotalPrice.add(Double.parseDouble(price));
+        }
+        for (Double price : calculateTotalPrice) {
+            totalPrice += price;
+        }
+        mSalePrice.setText(Double.toString(totalPrice));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        updateUI();
     }
 }

@@ -1,6 +1,7 @@
 package com.example.digikala.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.digikala.R;
+import com.example.digikala.fragment.ShoppingFragment;
 import com.example.digikala.model.product.ImagesItem;
 import com.example.digikala.model.product.ProductsItem;
+import com.example.digikala.repository.ShoppingRepository;
 import com.example.digikala.utils.ShoppingPreferences;
 
 import java.util.List;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.RecyclerHolder> {
 
+    public static final String TAG = "CardAdapter";
     private Context mContext;
     private List<ProductsItem> mProductsItem;
 
@@ -50,6 +54,17 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.RecyclerHolder
     public void onBindViewHolder(@NonNull RecyclerHolder holder, int position) {
         ProductsItem productItem = mProductsItem.get(position);
         holder.bindProduct(productItem);
+        holder.mMaterialButtonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShoppingRepository shoppingRepository = ShoppingRepository.getInstance(mContext);
+                Log.d(TAG, "onClick: "+shoppingRepository.getProducts().size());
+                shoppingRepository.deleteProduct(productItem);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, mProductsItem.size());
+
+            }
+        });
     }
 
     @Override
@@ -95,7 +110,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.RecyclerHolder
         }
 
         private void bindProduct(ProductsItem productItem) {
-
             mName.setText(productItem.getName() + "");
             mFinalPrice.setText(productItem.getPrice()+
                     " " + mContext.getResources().getString(R.string.toman));
@@ -143,12 +157,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.RecyclerHolder
                 }
             });
 
-            mMaterialButtonDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ShoppingPreferences.removeShopPrefData(mContext);
-                }
-            });
         }
 
     }

@@ -1,5 +1,6 @@
 package com.example.digikala.model.product;
 
+
 import com.google.gson.annotations.SerializedName;
 
 public class ImagesItem {

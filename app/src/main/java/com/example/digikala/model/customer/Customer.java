@@ -2,7 +2,7 @@ package com.example.digikala.model.customer;
 
 import com.google.gson.annotations.SerializedName;
 
-public class CreateCustomer {
+public class Customer {
     @SerializedName("email")
     private String mEmail;
 
@@ -16,10 +16,10 @@ public class CreateCustomer {
     private String mUserName;
 
     @SerializedName("billing")
-    private CustomerBilling mBilling;
+    private Billing mBilling;
 
     @SerializedName("shipping")
-    private CustomerShipping mShipping;
+    private Shipping mShipping;
 
     public String getEmail() {
         return mEmail;
@@ -53,19 +53,19 @@ public class CreateCustomer {
         mUserName = userName;
     }
 
-    public CustomerBilling getBilling() {
+    public Billing getBilling() {
         return mBilling;
     }
 
-    public void setBilling(CustomerBilling billing) {
+    public void setBilling(Billing billing) {
         mBilling = billing;
     }
 
-    public CustomerShipping getShipping() {
+    public Shipping getShipping() {
         return mShipping;
     }
 
-    public void setShipping(CustomerShipping shipping) {
+    public void setShipping(Shipping shipping) {
         mShipping = shipping;
     }
 }

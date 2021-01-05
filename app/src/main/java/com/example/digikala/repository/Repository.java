@@ -3,7 +3,7 @@ package com.example.digikala.repository;
 import android.util.Log;
 
 
-import com.example.digikala.model.customer.CreateCustomer;
+import com.example.digikala.model.customer.Customer;
 import com.example.digikala.model.product.CategoriesItem;
 import com.example.digikala.model.product.ProductsItem;
 import com.example.digikala.network.RequestService;
@@ -226,20 +226,18 @@ public class Repository {
         });
     }
 
-    public void sendCustomer(CreateCustomer customersItem, CustomerCallbacks customerCallbacks) {
-        HashMap<String, String> insideMap = new HashMap<>();
-        insideMap.putAll(BASE);
+    public void sendCustomer(String email, CustomerCallbacks customerCallbacks) {
 
-        mRequestService.createCustomer(customersItem, insideMap).enqueue(new Callback<CreateCustomer>() {
+        mRequestService.createCustomer(email).enqueue(new Callback<Customer>() {
             @Override
-            public void onResponse(Call<CreateCustomer> call, Response<CreateCustomer> response) {
+            public void onResponse(Call<Customer> call, Response<Customer> response) {
                 Log.d(TAG, "onResponse: " + response.body());
                 Log.d(TAG, "onResponse: " + response.code());
 
             }
 
             @Override
-            public void onFailure(Call<CreateCustomer> call, Throwable t) {
+            public void onFailure(Call<Customer> call, Throwable t) {
 
             }
         });
@@ -283,7 +281,7 @@ public class Repository {
     }
 
     public interface CustomerCallbacks {
-        void onItemResponse(CreateCustomer createCustomer);
+        void onItemResponse(Customer createCustomer);
     }
 
 
