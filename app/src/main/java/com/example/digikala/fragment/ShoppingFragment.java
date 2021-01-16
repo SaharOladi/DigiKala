@@ -51,7 +51,7 @@ public class ShoppingFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mRepository = new Repository();
+        mRepository = new Repository(getContext());
         mShoppingRepository = ShoppingRepository.getInstance(getContext());
     }
 

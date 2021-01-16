@@ -1,4 +1,4 @@
-package com.example.digikala.database.customer;
+package com.example.digikala.database;
 
 import androidx.room.TypeConverter;
 

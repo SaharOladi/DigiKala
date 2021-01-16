@@ -69,11 +69,11 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
 
         private void bindImageItem(SliderAdapterVH holder, ImagesItem image) {
             mImageItem = image;
-
-            Glide.with(mItemView)
-                    .load(image.getSrc())
-                    .fitCenter()
-                    .into(imageViewBackground);
+            if (image.getSrc().length() != 0)
+                Glide.with(mItemView)
+                        .load(image.getSrc())
+                        .fitCenter()
+                        .into(imageViewBackground);
 
         }
 

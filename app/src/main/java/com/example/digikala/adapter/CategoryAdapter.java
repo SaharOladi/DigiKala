@@ -94,10 +94,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         private void bindCategory(CategoriesItem categoriesItem) {
             mCategoryName.setText(categoriesItem.getName() + "");
             ImagesItem imageItem = categoriesItem.getImages();
-            Glide.with(mItemView)
-                    .load(imageItem.getSrc())
-                    .fitCenter()
-                    .into(mCategoryImage);
+            if (imageItem.getSrc().length() != 0)
+                Glide.with(mItemView)
+                        .load(imageItem.getSrc())
+                        .fitCenter()
+                        .into(mCategoryImage);
         }
 
     }

@@ -120,10 +120,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.RecyclerHolder
             setFinalPriceValue(mFinalPriceValue + mProductCount * basePrice);
 
             List<ImagesItem> imagesItems = productItem.getImages();
-            Glide.with(mItemView)
-                    .load(imagesItems.get(0).getSrc())
-                    .fitCenter()
-                    .into(mImageView);
+            if (imagesItems.get(0).getSrc().length() != 0)
+                Glide.with(mItemView)
+                        .load(imagesItems.get(0).getSrc())
+                        .fitCenter()
+                        .into(mImageView);
 
         }
 

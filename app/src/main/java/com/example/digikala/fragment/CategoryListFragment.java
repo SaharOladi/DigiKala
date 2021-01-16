@@ -52,7 +52,7 @@ public class CategoryListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mCategoryId = (int) getArguments().get(ARGS_ID);
-        mRepository = new Repository();
+        mRepository = new Repository(getContext());
 
         mRepository.fetchCategoryProduct(1, mCategoryId, new Repository.Callbacks() {
             @Override

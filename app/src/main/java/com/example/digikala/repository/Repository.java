@@ -1,5 +1,6 @@
 package com.example.digikala.repository;
 
+import android.content.Context;
 import android.util.Log;
 
 
@@ -24,6 +25,7 @@ import static com.example.digikala.network.NetworkParam.CONSUMER_SECRET;
 public class Repository {
 
     private final String TAG = "Repository";
+    private Context mContext;
 
     private List<ProductsItem> mProducts;
     private RequestService mRequestService;
@@ -42,8 +44,9 @@ public class Repository {
         mProducts = products;
     }
 
-    public Repository() {
-        mRequestService = RetrofitInstance.getInstance().create(RequestService.class);
+    public Repository(Context context) {
+        mRequestService = RetrofitInstance.getInstance(context).create(RequestService.class);
+        mContext = context;
     }
 
     public void fetchAllProductItemsAsync(Callbacks callBacks) {

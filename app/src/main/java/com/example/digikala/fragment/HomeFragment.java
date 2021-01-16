@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mRepository = new Repository();
+        mRepository = new Repository(getContext());
 
     }
 
@@ -84,12 +84,12 @@ public class HomeFragment extends Fragment{
             }
         });
 
-        mRepository.fetchRecentProducts(1, new Repository.Callbacks() {
-            @Override
-            public void onItemResponse(List<ProductsItem> items) {
-                initRecyclerAdapter(mRecyclerViewRecentProduct, mRecentProductAdapter, items);
-            }
-        });
+//        mRepository.fetchRecentProducts(1, new Repository.Callbacks() {
+//            @Override
+//            public void onItemResponse(List<ProductsItem> items) {
+//                initRecyclerAdapter(mRecyclerViewRecentProduct, mRecentProductAdapter, items);
+//            }
+//        });
 
         mRepository.fetchMostVisitedProducts(1, new Repository.Callbacks() {
             @Override

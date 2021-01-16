@@ -139,10 +139,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Recycler
             mName.setText(productItem.getName() + "");
             mPrice.setText(productItem.getPrice() + "");
             List<ImagesItem> imagesItems = productItem.getImages();
-            Glide.with(mItemView)
-                    .load(imagesItems.get(0).getSrc())
-                    .fitCenter()
-                    .into(mImage);
+            if (imagesItems.get(0).getSrc().length() != 0)
+                Glide.with(mItemView)
+                        .load(imagesItems.get(0).getSrc())
+                        .fitCenter()
+                        .into(mImage);
         }
 
     }

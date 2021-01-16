@@ -4,8 +4,8 @@ import android.content.Context;
 
 import androidx.room.Room;
 
-import com.example.digikala.database.customer.ProductDao;
-import com.example.digikala.database.customer.ProductDataBase;
+import com.example.digikala.database.ProductDao;
+import com.example.digikala.database.ProductDataBase;
 import com.example.digikala.model.product.ProductsItem;
 
 import java.util.List;

@@ -102,10 +102,11 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<ProductCategory
             mName.setText(productItem.getName() + "");
             mPrice.setText(productItem.getPrice() + " " + mContext.getResources().getString(R.string.toman));
             List<ImagesItem> imagesItems = productItem.getImages();
-            Glide.with(mItemView)
-                    .load(imagesItems.get(0).getSrc())
-                    .fitCenter()
-                    .into(mImage);
+            if (imagesItems.get(0).getSrc().length() != 0)
+                Glide.with(mItemView)
+                        .load(imagesItems.get(0).getSrc())
+                        .fitCenter()
+                        .into(mImage);
         }
 
     }
