@@ -12,11 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.Resource;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.digikala.R;
 import com.example.digikala.fragment.CategoryListFragment;
 import com.example.digikala.model.product.CategoriesItem;
 import com.example.digikala.model.product.ImagesItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryHolder> {
@@ -94,11 +97,28 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         private void bindCategory(CategoriesItem categoriesItem) {
             mCategoryName.setText(categoriesItem.getName() + "");
             ImagesItem imageItem = categoriesItem.getImages();
-            if (imageItem.getSrc().length() != 0)
-                Glide.with(mItemView)
-                        .load(imageItem.getSrc())
-                        .fitCenter()
-                        .into(mCategoryImage);
+            List<String> imagesItemList = new ArrayList<>();
+
+            for (int i = 0; i < imageItem.getSrc().length(); i++) {
+                imagesItemList.add(imageItem.getSrc());
+            }
+
+            for (int i = 0; i < imagesItemList.size(); i++) {
+                if (imagesItemList.get(i) == null)
+                    Glide.with(mItemView)
+                            .load(R.drawable.ic_placeholder_recycler)
+                            .placeholder(R.drawable.ic_placeholder_recycler)
+                            .fitCenter()
+                            .into(mCategoryImage);
+
+                else
+                    Glide.with(mItemView)
+                            .load(imageItem.getSrc())
+                            .placeholder(R.drawable.ic_placeholder_recycler)
+                            .fitCenter()
+                            .into(mCategoryImage);
+            }
+
         }
 
     }

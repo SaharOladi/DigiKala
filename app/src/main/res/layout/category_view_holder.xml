@@ -19,6 +19,8 @@
             android:layout_width="43dp"
             android:layout_height="43dp"
             android:layout_gravity="center"
+            tools:src="@drawable/ic_placeholder_recycler"
+            android:src="@drawable/ic_placeholder_recycler"
             android:scaleType="fitCenter" />
 
     </androidx.cardview.widget.CardView>

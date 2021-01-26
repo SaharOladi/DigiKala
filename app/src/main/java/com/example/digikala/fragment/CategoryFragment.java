@@ -140,18 +140,18 @@ public class CategoryFragment extends Fragment{
             }
         });
 
-//        mRepository.fetchCategoryProduct(1, ids.get(3), new Repository.Callbacks() {
-//            @Override
-//            public void onItemResponse(List<ProductsItem> items) {
-//                if (mAdapterFour == null) {
-//                    mAdapterFour = new ProductAdapter(getContext(), items);
-//                    mRecyclerViewCategoryFour.setAdapter(mAdapterFour);
-//                } else {
-//                    mAdapterFour.setProductsItem(items);
-//                    mAdapterFour.notifyDataSetChanged();
-//                }
-//            }
-//        });
+        mRepository.fetchCategoryProduct(1, ids.get(3), new Repository.Callbacks() {
+            @Override
+            public void onItemResponse(List<ProductsItem> items) {
+                if (mAdapterFour == null) {
+                    mAdapterFour = new ProductAdapter(getContext(), items);
+                    mRecyclerViewCategoryFour.setAdapter(mAdapterFour);
+                } else {
+                    mAdapterFour.setProductsItem(items);
+                    mAdapterFour.notifyDataSetChanged();
+                }
+            }
+        });
         mRepository.fetchCategoryProduct(1, ids.get(4), new Repository.Callbacks() {
             @Override
             public void onItemResponse(List<ProductsItem> items) {

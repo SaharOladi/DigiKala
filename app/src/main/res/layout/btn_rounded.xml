@@ -20,6 +20,7 @@
         android:drawableLeft="@drawable/ic_shopping_bag_small"
         android:fontFamily="@font/iran_yekan"
         android:textStyle="bold"
+        android:textColor="@color/white"
         app:backgroundTint="@color/green_digikala" />
 
 

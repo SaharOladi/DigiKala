@@ -84,12 +84,12 @@ public class HomeFragment extends Fragment{
             }
         });
 
-//        mRepository.fetchRecentProducts(1, new Repository.Callbacks() {
-//            @Override
-//            public void onItemResponse(List<ProductsItem> items) {
-//                initRecyclerAdapter(mRecyclerViewRecentProduct, mRecentProductAdapter, items);
-//            }
-//        });
+        mRepository.fetchRecentProducts(1, new Repository.Callbacks() {
+            @Override
+            public void onItemResponse(List<ProductsItem> items) {
+                initRecyclerAdapter(mRecyclerViewRecentProduct, mRecentProductAdapter, items);
+            }
+        });
 
         mRepository.fetchMostVisitedProducts(1, new Repository.Callbacks() {
             @Override

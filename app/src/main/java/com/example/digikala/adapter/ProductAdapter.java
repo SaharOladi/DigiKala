@@ -139,11 +139,28 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Recycler
             mName.setText(productItem.getName() + "");
             mPrice.setText(productItem.getPrice() + "");
             List<ImagesItem> imagesItems = productItem.getImages();
-            if (imagesItems.get(0).getSrc().length() != 0)
-                Glide.with(mItemView)
-                        .load(imagesItems.get(0).getSrc())
-                        .fitCenter()
-                        .into(mImage);
+            List<String> imagesItemList = new ArrayList<>();
+            for (int i = 0; i < imagesItems.size(); i++) {
+                imagesItemList.add(imagesItems.get(i).getSrc());
+            }
+
+            for (int i = 0; i < imagesItemList.size(); i++) {
+                if (imagesItemList.get(i) == null)
+                    Glide.with(mItemView)
+                            .load(R.drawable.ic_placeholder_recycler)
+                            .placeholder(R.drawable.ic_placeholder_recycler)
+                            .fitCenter()
+                            .into(mImage);
+
+                else
+                    Glide.with(mItemView)
+                            .load(imagesItemList.get(i))
+                            .placeholder(R.drawable.ic_placeholder_recycler)
+                            .fitCenter()
+                            .into(mImage);
+            }
+
+
         }
 
     }
