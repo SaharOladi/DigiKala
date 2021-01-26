@@ -1,14 +1,22 @@
 package com.example.digikala.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.example.digikala.R;
 import com.example.digikala.adapter.CategoryAdapter;
@@ -22,22 +30,26 @@ import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnima
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment{
+public class HomeFragment extends Fragment {
 
     public static final String TAG = "HomeFragment";
 
     private SliderView mSliderView;
     private SliderAdapter mSliderAdapter;
 
+    private EditText mSearch;
+
+
     private RecyclerView mRecyclerViewRecentProduct, mRecyclerViewMostVisitedProduct,
             mRecyclerViewRatedProduct, mRecyclerCategoryProduct, mRecyclerViewAmazing;
 
 
     private ProductAdapter mRecentProductAdapter, mMostVisitedProductAdapter,
-                           mRatedProductAdapter, mAmazingAdapter;
+            mRatedProductAdapter, mAmazingAdapter;
 
     private CategoryAdapter mCategoryAdapter;
 
@@ -72,6 +84,8 @@ public class HomeFragment extends Fragment{
 
         findViews(view);
         updateRecycler();
+
+        setSearchListener();
 
         return view;
     }
@@ -126,6 +140,8 @@ public class HomeFragment extends Fragment{
         mRecyclerViewRatedProduct = view.findViewById(R.id.fragment_home_recyclerview_top_rated);
         mRecyclerCategoryProduct = view.findViewById(R.id.fragment_home_recyclerview_category);
         mRecyclerViewAmazing = view.findViewById(R.id.fragment_home_recyclerview_offered_item);
+        mSearch = view.findViewById(R.id.searching_query);
+
     }
 
     private void initRecyclerAdapter(RecyclerView recyclerView,
@@ -181,5 +197,35 @@ public class HomeFragment extends Fragment{
             categoryAdapter.notifyDataSetChanged();
         }
     }
+
+
+    private void setSearchListener() {
+        mSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+
+            public void afterTextChanged(Editable s) {
+                getQueryEditText(s.toString());
+            }
+        });
+
+
+    }
+
+
+    private void getQueryEditText(String query) {
+
+        if (query.length() > 2)
+            ((AppCompatActivity) getContext()).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, SearchFragment.newInstance(query))
+                    .commit();
+    }
+
 
 }
