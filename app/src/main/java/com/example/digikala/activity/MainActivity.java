@@ -3,12 +3,14 @@ package com.example.digikala.activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.digikala.IOnBackPress;
 import com.example.digikala.fragment.CategoryFragment;
 import com.example.digikala.fragment.HomeFragment;
 import com.example.digikala.R;
@@ -91,5 +93,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (!(fragment instanceof IOnBackPress) || !((IOnBackPress) fragment).onBackPressed()) {
+            super.onBackPressed();
+        }else {
+            getSupportFragmentManager().
+                    beginTransaction().
+                    replace(R.id.fragment_container,
+                            HomeFragment.newInstance()).
+                    commit();
+        }
+    }
+
 
 }

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.digikala.IOnBackPress;
 import com.example.digikala.R;
 import com.example.digikala.adapter.CardAdapter;
 import com.example.digikala.model.customer.Customer;
@@ -23,7 +24,7 @@ import com.example.digikala.repository.ShoppingRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShoppingFragment extends Fragment {
+public class ShoppingFragment extends Fragment implements IOnBackPress {
 
     public static final String TAG = "ShoppingFragment";
     private Repository mRepository;
@@ -124,4 +125,8 @@ public class ShoppingFragment extends Fragment {
 
     }
 
+    @Override
+    public boolean onBackPressed() {
+        return true;
+    }
 }

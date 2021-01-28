@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.digikala.IOnBackPress;
 import com.example.digikala.R;
 import com.example.digikala.adapter.SliderAdapter;
 import com.example.digikala.model.product.ImagesItem;
@@ -27,7 +28,7 @@ import org.jsoup.safety.Whitelist;
 
 import java.util.List;
 
-public class ProductDetailFragment extends Fragment {
+public class ProductDetailFragment extends Fragment implements IOnBackPress {
     public static final String ARGS_PRODUCT = "ARGS_PRODUCT_DETAIL";
 
     private Repository mRepository;
@@ -126,4 +127,8 @@ public class ProductDetailFragment extends Fragment {
         mSliderView.setSliderAdapter(mSliderAdapter);
     }
 
+    @Override
+    public boolean onBackPressed() {
+        return true;
+    }
 }

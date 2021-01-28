@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.digikala.IOnBackPress;
 import com.example.digikala.R;
 import com.example.digikala.adapter.ProductCategoryAdapter;
 import com.example.digikala.model.product.ProductsItem;
@@ -20,7 +21,7 @@ import com.example.digikala.repository.Repository;
 
 import java.util.List;
 
-public class CategoryListFragment extends Fragment {
+public class CategoryListFragment extends Fragment implements IOnBackPress {
     public static final String ARGS_ID = "ARGS_ID";
     public static final int REQUEST_CODE_ORDER = 10;
     public static final String TAG_CHOOSE_ORDER = "TAG_CHOOSE_ORDER";
@@ -129,4 +130,8 @@ public class CategoryListFragment extends Fragment {
         }
     }
 
+    @Override
+    public boolean onBackPressed() {
+        return true;
+    }
 }

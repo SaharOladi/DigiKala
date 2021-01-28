@@ -1,9 +1,7 @@
 package com.example.digikala.fragment;
 
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,13 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.example.digikala.IOnBackPress;
 import com.example.digikala.R;
 import com.example.digikala.adapter.CategoryAdapter;
 import com.example.digikala.adapter.ProductAdapter;
@@ -30,11 +27,10 @@ import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnima
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements IOnBackPress {
 
     public static final String TAG = "HomeFragment";
 
@@ -228,4 +224,8 @@ public class HomeFragment extends Fragment {
     }
 
 
+    @Override
+    public boolean onBackPressed() {
+        return true;
+    }
 }

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.digikala.IOnBackPress;
 import com.example.digikala.R;
 import com.example.digikala.adapter.ProductAdapter;
 import com.example.digikala.adapter.ProductCategoryAdapter;
@@ -19,7 +20,7 @@ import com.example.digikala.repository.Repository;
 import java.util.List;
 
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements IOnBackPress {
 
     public static final String ARGS_QUERY = "ARGS_QUERY";
 
@@ -79,4 +80,8 @@ public class SearchFragment extends Fragment {
     }
 
 
+    @Override
+    public boolean onBackPressed() {
+        return true;
+    }
 }

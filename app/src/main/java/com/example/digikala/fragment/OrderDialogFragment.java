@@ -16,10 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioButton;
 
+import com.example.digikala.IOnBackPress;
 import com.example.digikala.R;
 
 
-public class OrderDialogFragment extends DialogFragment {
+public class OrderDialogFragment extends DialogFragment implements IOnBackPress {
 
     public static final String ARGS_ID_ORDER_DIALOG = "ARGS_ID_ORDER_DIALOG";
 
@@ -115,5 +116,10 @@ public class OrderDialogFragment extends DialogFragment {
         Intent intent = new Intent();
         intent.putExtra(EXTRA_ORDER_DIALOG_FRAGMENT, string);
         fragment.onActivityResult(requestCode, resultCode, intent);
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return true;
     }
 }

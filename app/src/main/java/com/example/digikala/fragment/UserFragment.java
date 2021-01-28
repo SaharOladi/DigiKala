@@ -8,9 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.digikala.IOnBackPress;
 import com.example.digikala.R;
 
-public class UserFragment extends Fragment {
+public class UserFragment extends Fragment implements IOnBackPress {
 
     public UserFragment() {
         // Required empty public constructor
@@ -33,5 +34,10 @@ public class UserFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_user, container, false);
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return true;
     }
 }

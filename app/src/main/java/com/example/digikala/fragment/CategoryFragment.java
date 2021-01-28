@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.digikala.IOnBackPress;
 import com.example.digikala.R;
 import com.example.digikala.adapter.ProductAdapter;
 import com.example.digikala.model.product.CategoriesItem;
@@ -19,7 +20,7 @@ import com.example.digikala.repository.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryFragment extends Fragment{
+public class CategoryFragment extends Fragment implements IOnBackPress {
 
     public static final String TAG = "CategoryFragment";
 
@@ -258,4 +259,8 @@ public class CategoryFragment extends Fragment{
     }
 
 
+    @Override
+    public boolean onBackPressed() {
+        return true;
+    }
 }
